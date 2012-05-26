@@ -24,4 +24,16 @@ class TestCambridge < CambridgeCase
       Cambridge.run_file @filename
     end
   end
+
+  context 'Block demo' do
+    setup do
+      @filename = File.join(File.dirname(__FILE__), 'fixtures', 'blocks.cambridge')
+    end
+
+    should 'print to stdout' do
+      $stdout.expects(:puts).with('H')
+
+      Cambridge.run_file @filename
+    end
+  end
 end

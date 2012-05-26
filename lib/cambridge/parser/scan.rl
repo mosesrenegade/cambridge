@@ -9,8 +9,16 @@
 
   action _number { @mark_num = p }
   action number { @tokens << Tokens::Number.new(data[@mark_num..p-1]) }
-  
 
+  action _beg_block { @mark_str = p }
+  action Beg_Block { @tokens << Tokens::Command.new([@mark_str..p-1) }
+
+  action _end_block { @mark_str = p }
+  action end_block { @tokens << Tokens::Command.new([@mark_str..p-1) }
+
+  action _bool { @mark_str = p }
+  action bool { @tokens << Tokens::Command.new(data[@mark_str..p-1]) }
+  
   SingleCharacter = any;
 
   StringComponent = SingleCharacter;
@@ -19,9 +27,15 @@
 
   Number = (digit+) >_number %number;
 
+  Beg_Block = ( "{" ) >_string %string;
+
+  End_Block = ( "}" ) >_string %string;
+
+  Bool = ( "{" any* "}" ) >_bool %bool;
+
   Command = (alpha alnum*) >_command %command;
 
-  Token = String | Number | Command;
+  Token = Bool | String | Number | Command;
 
   Program = Token (space+ Token)*;
 
