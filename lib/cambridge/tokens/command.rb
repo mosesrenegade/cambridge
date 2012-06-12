@@ -10,13 +10,23 @@ module Cambridge
         when 'dump'
           "puts @stack.inspect"
         when 'prints'
-          "puts @stack.pop"
+          "puts '@stack.pop'"
         when 'printi'
           "puts @stack.pop.to_s"
-        when 'add'
+        when 'eval'
+          "@stack.pop.call"
+        when '+'
           "@stack.push(@stack.pop + @stack.pop)"
-        when 'mult'
+        when '*'
           "@stack.push(@stack.pop * @stack.pop)"
+        when '-'
+          "@stack.push(@stack.pop * @stack.pop)"
+        when '/'
+          "@stack.push(@stack.pop * @stack.pop)"
+        when '{'
+          "@stack.push(proc do"
+        when '}'
+          "end)"
         end
       end
     end
